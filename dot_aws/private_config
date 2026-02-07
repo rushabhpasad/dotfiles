@@ -1,0 +1,50 @@
+[rmp]
+region = ap-south-1
+output = json
+
+[profile jyot]
+sso_session = stl-google
+sso_account_id = 741464515468
+sso_role_name = AdministratorAccess
+region = ap-south-1
+output = json
+
+[profile stl-admin]
+sso_session = stl-google
+sso_account_id = 021891581629
+sso_role_name = AdministratorAccess
+region = ap-south-1
+output = json
+
+[profile stl-dev]
+sso_session = stl-google
+sso_account_id = 920373023589
+sso_role_name = AdministratorAccess
+region = ap-south-1
+output = json
+
+[profile sm-dev]
+sso_session = stl-google
+sso_account_id = 021891582190
+sso_role_name = AdministratorAccess
+region = ap-south-1
+output = json
+
+[profile sm-prod]
+sso_session = stl-google
+sso_account_id = 021891582293
+sso_role_name = AdministratorAccess
+region = ap-south-1
+output = json
+
+[profile sm-sandbox]
+sso_session = stl-google
+sso_account_id = 061039791346
+sso_role_name = AdministratorAccess
+region = ap-south-1
+output = json
+
+[sso-session stl-google]
+sso_start_url = https://d-9067d11750.awsapps.com/start/#
+sso_region = us-east-1
+sso_registration_scopes = sso:account:access

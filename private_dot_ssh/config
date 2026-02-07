@@ -1,0 +1,82 @@
+LogLevel error  
+StrictHostKeyChecking no  
+UserKnownHostsFile /dev/null  
+ServerAliveCountMax 18  
+ServerAliveInterval 5  
+GSSAPIAuthentication yes  
+GSSAPIDelegateCredentials yes  
+User rpasad
+
+Host *-bastion*  
+  ProxyCommand none  
+# Production connections, multiplexed via ST bastion  
+Host ch* ci* ma* qa* qs* st* sv*  
+  ProxyCommand ssh -q st11a00is-bastion.isg.apple.com -W %h:%p  
+  ForwardAgent yes  
+  ConnectTimeout 30  
+  ConnectionAttempts 3  
+# Production connections, multiplexed via MR bastion  
+Host mr*  
+  ProxyCommand ssh -q mr11a00is-bastion.isg.apple.com -W %h:%p  
+  ForwardAgent yes  
+  ConnectTimeout 30  
+  ConnectionAttempts 3  
+# Production connections, multiplexed via NK bastion  
+Host nk*  
+  ProxyCommand ssh -q nk11a00is-bastion.isg.apple.com -W %h:%p  
+  ForwardAgent yes  
+  ConnectTimeout 30  
+  ConnectionAttempts 3  
+# Production connections, multiplexed via PV bastion  
+Host pv*  
+  ProxyCommand ssh -q pv31a00is-bastion.isg.apple.com -W %h:%p  
+  ForwardAgent yes  
+  ConnectTimeout 30  
+  ConnectionAttempts 3  
+# Dev connections, multiplexed via VP bastion  
+Host vp*  
+  ProxyCommand ssh -q vp21a00is-bastion.isg.apple.com -W %h:%p  
+  ForwardAgent yes  
+  ConnectTimeout 30  
+  ConnectionAttempts 3  
+# Avoid recursion when trying to SSH via remaining launchpads  
+Host mt03a00is-launchpad001.isg.apple.com  
+  ProxyCommand none  
+Host ch41a00pi-launchpad001.isg.apple.com  
+  ProxyCommand none  
+Host qa31a00pi-launchpad001.isg.apple.com  
+  ProxyCommand none  
+# MT03 lab connections, multiplexed via lab launchpad  
+Host mt*  
+  ProxyCommand ssh -q mt03a00is-launchpad001.isg.apple.com -W %h:%p  
+# Host aliases for the ssh command  
+Host ch  
+  Hostname ch41a00pi-launchpad001.isg.apple.com  
+Host ci  
+  Hostname ch41a00pi-launchpad001.isg.apple.com  
+Host mr  
+  Hostname mr11a00as-launchpad001.isg.apple.com  
+Host nk  
+  Hostname nk11a00as-launchpad001.isg.apple.com  
+Host pv  
+  Hostname pv31a00as-launchpad001.isg.apple.com  
+Host qa  
+  Hostname qa31a00pi-launchpad001.isg.apple.com  
+Host qs  
+  Hostname qa31a00pi-launchpad001.isg.apple.com  
+Host st  
+  Hostname st11a00as-launchpad002.isg.apple.com  
+Host vp  
+  Hostname vp21a00is-launchpad001.isg.apple.com  
+Host mt  
+  Hostname mt03a00is-launchpad001.isg.apple.com  
+# Trust no one else  
+Host *  
+  IdentityFile ~/.ssh/id_rsa
+  UseKeychain yes
+  AddKeysToAgent yes
+  ForwardAgent no  
+  GSSAPIAuthentication no  
+  GSSAPIDelegateCredentials no  
+  HostkeyAlgorithms +ssh-rsa
+  PubkeyAcceptedAlgorithms +ssh-rsa

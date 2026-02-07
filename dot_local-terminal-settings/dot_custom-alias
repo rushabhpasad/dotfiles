@@ -1,0 +1,102 @@
+########## ALIASES #################
+
+# Git shortcuts
+alias st="git st"
+alias gdiff="git diff"
+alias pull="git pull && git submodule sync --recursive && git submodule update --init --recursive"
+alias push="git push"
+alias stash="git stash"
+alias co="git checkout"
+
+# kubektl shortcuts
+alias k='kubectl'
+alias kdq='kubectl describe quota'
+alias kd='kubectl get deployments'
+alias kdd='kubectl describe'
+alias kp='kubectl get pods'
+alias kl='kubectl logs'
+alias kuse='kubectl config use-context'
+alias kset='kubectl config set-context --current --namespace'
+
+# # Apple aliases
+# #alias entd="k config get-contexts | grep \* | cut -d ' ' -f159 | sed 's/$/\.kube/' | xargs ent describe"
+# #alias entd_all="kcli get namespaces | sed 's/$/\.kube/' | xargs -L 1 ent describe"
+# 
+# # iCloud
+# #alias ic4='ssh -v -N -L 7001:vp21q49ic-hpao081328:7001 vp21a00is-bastion.isg.apple.com'
+# #alias mongo_prod='ssh -v -N -L 8000:p00-irptportalcache.me.com:80 st11a00is-bastion.isg.apple.com'
+# #alias stcache='ssh -v -N -L 8888:st11p00ic-hpaf06262001.me.com:11211 st11a00is-bastion.isg.apple.com'
+# #alias icloud_db='ssho -v -N -L 1523:p00-rireportpdbvip.me.com:1567 st11a00is-bastion.isg.apple.com'
+# #alias stage='ssh -oStrictHostKeyChecking=no -oCheckHostIP=no statsmgr@isdevmars001'
+# 
+# # Launchpads
+# #alias mr_lpad='ssh -o ForwardAgent=yes rpasad@mr11a00is-bastion.isg.apple.com'
+# #alias st_lpad='ssh -o ForwardAgent=yes rpasad@st11a00is-bastion.isg.apple.com'
+# #alias nk_lpad='ssh -o ForwardAgent=yes rpasad@nk11a00is-bastion.isg.apple.com'
+# #alias pv_lpad='ssh -o ForwardAgent=yes rpasad@pv31a00is-bastion.isg.apple.com'
+# #alias vp_lpad='ssh -o ForwardAgent=yes rpasad@vp21a00is-bastion.isg.apple.com'
+# #alias lpadqa='ssh -o ForwardAgent=yes rpasad@vp21a00is-bastion.isg.apple.com'
+# 
+# # ApplePay
+# alias aprpt='ssh -oStrictHostKeyChecking=no -oCheckHostIP=no admin@aprpt001.scv.apple.com'
+# alias stockholm_db='ssh -v -N -L 1522:10.112.87.26:1567 mr11a00is-bastion.isg.apple.com'
+# #alias stockholm_db_old='ssh -v -N -L 1522:mr11p00ic-irptshmpdbvip.me.com:1567 mr11a00is-bastion.isg.apple.com'
+# #alias stockholm_db_uat='ssh -v -N -L 1524:10.38.41.136:1567 mr11a00is-bastion.isg.apple.com'
+# alias stockholm_db_qa='ssh -v -N -L 1526:10.38.42.25:1567 mr11a00is-bastion.isg.apple.com'
+# alias mr35='ssh mr11p00ic-ztbu07035001'
+# alias mr45='ssh mr11p00ic-ztbu07045001'
+
+# My Terminal shortcuts
+alias rmds="find . -name .DS_Store -delete &"
+#alias wget="curl -O"
+alias ..="cd .."
+alias l="ls --color -hal"
+alias c="clear"
+alias q="exit"
+# alias grep="grep -n --color" 
+alias hist="history 1"
+alias h="history -10" # last 10 history commands
+alias hg="hist | grep " # +command
+alias r="reload"
+alias p="ping google.com"
+#alias killcamera="sudo killall VDCAssistant"
+alias wget="curl -O"
+alias ssho='ssh -o ForwardAgent=yes'
+
+alias docker-compose='docker compose'
+alias dc='docker compose'
+alias bb='brew update && brew upgrade $(brew leaves) && brew outdated --cask --greedy --verbose | awk '\''{print $1}'\'' | xargs brew reinstall --cask'
+
+########### EXPORTS + MISC ################
+
+# Terminal Colors
+#export CLICOLOR=1
+#export LSCOLORS=GxFxCxDxBxegedabagaced
+
+# Araxis Compare
+export PATH=$PATH:/Applications/Araxis\ Merge.app/Contents/Utilities
+
+# JAVA HOME/PATH
+export JAVA_HOME=/opt/homebrew/Cellar/openjdk/21.0.1/libexec/openjdk.jdk/Contents/Home
+
+### Java 21
+# export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+# export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+
+### Java 17
+# export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+# export CPPFLAGS="-I/opt/homebrew/opt/openjdk@17/include"
+
+
+# History Size
+setopt APPEND_HISTORY
+HISTSIZE=100000000
+HISTFILESIZE=100000000
+SAVEHIST=$HISTSIZE
+
+# pyenv
+if command -v pyenv >/dev/null; then eval "$(pyenv init --path)"; eval "$(pyenv init -)"; fi
+
+# AWS
+export AWS_PROFILE=stl-admin
+export AWS_DEFAULT_REGION=ap-south-1

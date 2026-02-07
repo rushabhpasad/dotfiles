@@ -1,0 +1,44 @@
+[time]
+disabled = false
+format = '🕙 [\[$time\]]($style) '
+time_format = "%D %T"
+
+[status]
+style = "bold red"
+symbol = "🔴"
+format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
+
+[aws]
+format = 'on [$symbol($profile )(\($region\) )]($style)'
+style = "bold blue"
+symbol = "🅰 "
+
+[conda]
+ignore_base = false
+format = '[$symbol conda-$environment ]($style)'
+style = 'bold purple'
+
+[kubernetes]
+style = "bold green"
+format = 'on [$symbol$context \($namespace\)]($style) '
+disabled = false
+[kubernetes.context_aliases]
+
+[sudo]
+style = "bold cyan"
+symbol = "👩‍💻 "
+disabled = false
+
+[custom.arch]
+command = "echo $(arch)"
+format = '[\($output\)]($style) '
+style = "bold fg:130"
+when = true
+
+[username]
+format = "[$user]($style) "
+disabled = false
+show_always = true
+
