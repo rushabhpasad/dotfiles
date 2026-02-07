@@ -1,0 +1,60 @@
+# Kube functions
+kns () 
+{
+	NAMESPACE=("$@")
+	kubectl config set-context --current --namespace=$NAMESPACE
+}
+
+# Java functions
+jv-switch() {
+	unset JAVA_HOME
+	JAVA_HOME="$(/usr/libexec/java_home -v $1)"
+	export JAVA_HOME
+	echo "JAVA_HOME now pointing to - $JAVA_HOME"
+	jvr
+}
+
+jvr() {
+	java -version
+}
+
+jvl() {
+	/usr/libexec/java_home -V
+}
+
+# AWS
+
+aws-profile() {
+	update_env_var AWS_PROFILE $1
+}
+
+aws-region() {
+	update_env_var AWS_DEFAULT_REGION $1
+}
+
+# Misc
+jwt-decode() {
+  jq -R 'split(".") |.[0:2] | map(@base64d) | map(fromjson)' <<< $1
+}
+
+b64-decode() {
+	echo "$1" | base64 -d | jq 
+}
+
+update_env_var() {
+    # Check if the function received the correct number of arguments
+    if [[ $# -ne 2 ]]; then
+        echo "Usage: update_env_var <VARIABLE_NAME> <VALUE>"
+        return 1
+    fi
+
+    # Assign arguments to variables for clarity
+    local var_name="$1"
+    local value="$2"
+
+    # Use `export` to set the environment variable
+    export $var_name="$value"
+    
+    echo "Updated $var_name to $value"
+}
+

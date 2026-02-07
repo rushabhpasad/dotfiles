@@ -1,0 +1,10 @@
+alias reload="source ~/.bashrc"
+
+# Custom aliases
+if [ -r ~/local-terminal-settings/.custom-alias ]; then
+    source ~/local-terminal-settings/.custom-alias
+fi
+
+# Activate Starship
+eval "$(starship init bash)"
+

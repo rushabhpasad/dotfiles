@@ -1,0 +1,30 @@
+# ~/.continue/config.yaml
+
+name: MyLocalCodingAssistant
+version: 1.0.0
+schema: v1
+
+models:
+  - name: deepseek-coder-v2-16b
+    provider: ollama
+    model: deepseek-coder-v2:16b
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+      - rerank
+    defaultCompletionOptions:
+      temperature: 0.2
+      maxTokens: 1024
+  - name: llama3-instruct
+    provider: ollama
+    model: llama3:instruct
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+      - edit
+    defaultCompletionOptions:
+      temperature: 0.3
+      maxTokens: 512

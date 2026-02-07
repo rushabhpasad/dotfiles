@@ -1,0 +1,78 @@
+# -------------------------------
+# macOS junk
+# -------------------------------
+.DS_Store
+**/.DS_Store
+.Trash
+*.swp
+*.tmp
+
+# -------------------------------
+# SSH — never commit infra keys
+# -------------------------------
+.ssh/known_hosts
+.ssh/**/*.pem
+.ssh/**/android/*
+.ssh/**/stl_play_keystore
+
+# -------------------------------
+# AWS — ignore temp auth & cache
+# -------------------------------
+.aws/cli/cache/**
+.aws/sso/cache/**
+.aws/cli/cache
+.aws/sso/cache
+
+# -------------------------------
+# GnuPG — ignore agent/runtime
+# (private keys handled explicitly via encryption)
+# -------------------------------
+.gnupg/gpg-agent*
+.gnupg/*.lock
+
+# -------------------------------
+# Continue AI — ignore runtime data
+# -------------------------------
+.continue/dev_data/**
+.continue/index/**
+.continue/sessions/**
+.continue/**/*.sqlite*
+.continue/**/*.jsonl
+.continue/rules.zip
+
+# -------------------------------
+# Eclipse — exclude entirely
+# -------------------------------
+.eclipse/**
+
+# -------------------------------
+# General caches & logs
+# -------------------------------
+.cache/**
+*.log
+*.cache
+
+# -------------------------------
+# Node / package manager noise
+# -------------------------------
+node_modules/**
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -------------------------------
+# Python noise
+# -------------------------------
+__pycache__/**
+*.pyc
+*.pyo
+
+# -------------------------------
+# Misc large or local-only data
+# -------------------------------
+Downloads/**
+Desktop/**
+Documents/**
+Pictures/**
+Movies/**
+Music/**

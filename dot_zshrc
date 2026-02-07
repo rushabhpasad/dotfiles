@@ -1,0 +1,83 @@
+[ -r ~/.zprofile ] && source ~/.zprofile
+
+# Activate Starship
+eval "$(starship init zsh)"
+
+# zsh completion
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
+# zsh completion for eksctl
+fpath=($fpath ~/.zsh/completion)
+
+#kubectl completion
+[[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
+
+# SSH Config File Completion
+h=()
+if [[ -r ~/.ssh/config ]]; then
+  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config)"}:#Host *}#Host }:#*[*?]*})
+fi
+if [[ $#h -gt 0 ]]; then
+  zstyle ':completion:*:ssh:*' hosts $h
+  zstyle ':completion:*:slogin:*' hosts $h
+fi
+
+# Custom aliases
+alias reload="source ~/.zshrc"
+if [ -r ~/.local-terminal-settings/.custom-alias ]; then
+    source ~/.local-terminal-settings/.custom-alias
+fi
+
+# Custom functions
+if [ -r ~/.local-terminal-settings/.zsh-functions ]; then
+    source ~/.local-terminal-settings/.zsh-functions
+fi
+
+# NVM
+if [ -r ~/.zsh-nvm/zsh-nvm.plugin.zsh ]; then
+    source ~/.zsh-nvm/zsh-nvm.plugin.zsh
+fi
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+# End of NVM settings
+
+# AWS Autocomplete initialization
+autoload bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
+complete -C '/opt/homebrew/bin/aws_completer' aws
+# End AWS Autocomplete initialization
+
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+export PATH="/usr/local/bin/:$PATH"
+export PATH="/opt/homebrew/opt/php@7.2/sbin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
+# Added by Antigravity
+export PATH="/Users/rpasad/.antigravity/antigravity/bin:$PATH"
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/rpasad/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
