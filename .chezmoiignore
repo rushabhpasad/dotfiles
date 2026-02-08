@@ -27,7 +27,6 @@
 # GnuPG — ignore agent/runtime
 # (private keys handled explicitly via encryption)
 # -------------------------------
-.gnupg/gpg-agent*
 .gnupg/*.lock
 
 # -------------------------------
