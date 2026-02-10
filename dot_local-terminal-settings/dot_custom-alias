@@ -63,6 +63,9 @@ alias p="ping google.com"
 alias wget="curl -O"
 alias ssho='ssh -o ForwardAgent=yes'
 
+# chezmoi
+alias chezbackup="~/scripts/chezmoi-auto-commit.sh"
+
 alias docker-compose='docker compose'
 alias dc='docker compose'
 alias bb='brew update && brew upgrade $(brew leaves) && brew outdated --cask --greedy --verbose | awk '\''{print $1}'\'' | xargs brew reinstall --cask'
