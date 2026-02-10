@@ -18,6 +18,7 @@ fpath=($fpath ~/.zsh/completion)
 [[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
 
 # SSH Config File Completion
+# helps autocomplete hosts in ssh (+ tab) command
 h=()
 if [[ -r ~/.ssh/config ]]; then
   h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config)"}:#Host *}#Host }:#*[*?]*})
