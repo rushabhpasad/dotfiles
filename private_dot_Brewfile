@@ -105,11 +105,8 @@ mas "Windows App", id: 1295203466
 mas "Xcode", id: 497799835
 vscode "anthropic.claude-code"
 vscode "continue.continue"
-vscode "docker.docker"
 vscode "eamodio.gitlens"
 vscode "esbenp.prettier-vscode"
-vscode "ms-azuretools.vscode-containers"
-vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
