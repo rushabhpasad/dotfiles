@@ -8,44 +8,33 @@ CHEZMOI_SRC="$HOME/.local/share/chezmoi"
 BREWFILE="$HOME/.Brewfile"
 LOG="$HOME/$(basename "$0" .sh).log"
 
-timestamp() {
-  date '+%Y-%m-%d %H:%M:%S'
-}
+timestamp() { date '+%Y-%m-%d %H:%M:%S'; }
 
 log() {
   local msg="[$(timestamp)] $*"
   echo "$msg" >> "$LOG"
-
-  # Print to terminal if interactive
-  if [[ -t 1 ]]; then
-    echo "$msg"
-  fi
+  [[ -t 1 ]] && echo "$msg"
 }
 
 run_cmd() {
   if [[ -t 1 ]]; then
-    if ! "$@" 2>&1 | tee -a "$LOG"; then
-      log "WARN: command failed → $*"
-      return 1
-    fi
+    "$@" 2>&1 | tee -a "$LOG" || log "WARN: command failed → $*"
   else
-    if ! "$@" >> "$LOG" 2>&1; then
-      log "WARN: command failed → $*"
-      return 1
-    fi
+    "$@" >> "$LOG" 2>&1 || log "WARN: command failed → $*"
   fi
 }
 
-log "Starting chezmoi auto-backup..."
+echo""
+log "========== Starting chezmoi auto-backup =========="
 
 # --------------------------------------------------
-# 1. Refresh Brewfile (only if brew exists)
+# 1. Refresh Brewfile
 # --------------------------------------------------
 if command -v brew >/dev/null 2>&1; then
-  log "Updating Brewfile..."
+  log "Refreshing Brewfile..."
 
   TMP_BREWFILE="$(mktemp)"
-  brew bundle dump --force --file="$TMP_BREWFILE" >/dev/null 2>&1 || true
+  run_cmd brew bundle dump --force --file="$TMP_BREWFILE"
 
   if [[ ! -f "$BREWFILE" ]] || ! cmp -s "$TMP_BREWFILE" "$BREWFILE"; then
     mv "$TMP_BREWFILE" "$BREWFILE"
@@ -54,12 +43,25 @@ if command -v brew >/dev/null 2>&1; then
     rm "$TMP_BREWFILE"
     log "Brewfile unchanged."
   fi
+else
+  log "Brew not installed. Skipping Brewfile."
 fi
 
 # --------------------------------------------------
-# 2. Go to chezmoi source
+# 2. Validate chezmoi source repo
 # --------------------------------------------------
+if [[ ! -d "$CHEZMOI_SRC/.git" ]]; then
+  log "ERROR: chezmoi repo missing."
+  exit 1
+fi
+
 cd "$CHEZMOI_SRC"
+
+# Ensure on main branch (optional but smart)
+if ! git rev-parse --abbrev-ref HEAD >/dev/null 2>&1; then
+  log "ERROR: git repo unhealthy."
+  exit 1
+fi
 
 # --------------------------------------------------
 # 3. Detect dotfile changes
@@ -67,30 +69,37 @@ cd "$CHEZMOI_SRC"
 if ! chezmoi diff --quiet; then
   log "Changes detected. Re-adding tracked files..."
 
-  run_cmd chezmoi re-add || true
+  run_cmd chezmoi re-add
+
+  # Stage updated tracked files
+  run_cmd git add -u
 
   # --------------------------------------------------
-  # 4. Safety: block committing obvious secrets
+  # Secret detection (check staged changes only)
   # --------------------------------------------------
-  if git diff --name-only | grep -Ei '\.(pem|key|p12|keystore|env)$|age\.txt|credentials' >/dev/null 2>&1; then
-    log "⚠️ Potential secret detected. Skipping commit."
+  if git diff --cached --name-only \
+      | grep -Ei '\.(pem|key|p12|keystore|env)$|age\.txt|credentials' \
+      >/dev/null 2>&1; then
+    log "⚠️ Potential secret detected in staged files. Skipping commit."
+    git reset
     exit 0
   fi
 
   # --------------------------------------------------
-  # 5. Commit & push (only if staged changes exist)
+  # Commit only if staged changes exist
   # --------------------------------------------------
   if ! git diff --cached --quiet; then
     COMMIT_MSG="auto: periodic dotfile backup ($(timestamp))"
 
-    run_cmd git add .
-    run_cmd git commit -m "$COMMIT_MSG" || true
-    run_cmd git push || true
+    run_cmd git commit -m "$COMMIT_MSG"
+    run_cmd git push
 
     log "Backup complete."
   else
-    log "No staged changes after re-add."
+    log "No changes after staging."
   fi
 else
   log "No dotfile changes."
 fi
+
+log "========== Backup run finished =========="
