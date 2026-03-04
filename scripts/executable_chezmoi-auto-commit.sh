@@ -24,7 +24,7 @@ run_cmd() {
   fi
 }
 
-echo""
+echo "" >> "$LOG"
 log "========== Starting chezmoi auto-backup =========="
 
 # --------------------------------------------------
