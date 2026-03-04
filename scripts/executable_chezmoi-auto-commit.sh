@@ -66,10 +66,10 @@ fi
 # --------------------------------------------------
 # 3. Detect dotfile changes
 # --------------------------------------------------
+run_cmd chezmoi re-add
+
 if ! chezmoi diff --quiet; then
   log "Changes detected. Re-adding tracked files..."
-
-  run_cmd chezmoi re-add
 
   # Stage updated tracked files
   run_cmd git add -u
