@@ -7,6 +7,7 @@ alias pull="git pull && git submodule sync --recursive && git submodule update -
 alias push="git push"
 alias stash="git stash"
 alias co="git checkout"
+alias gprune="rm .git/refs/remotes/origin/*"
 
 # kubektl shortcuts
 alias k='kubectl'
