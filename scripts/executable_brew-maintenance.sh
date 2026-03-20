@@ -1,7 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -euo pipefail
 
 PATH="/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH
 LOG="$HOME/$(basename "$0" .sh).log"
 
 timestamp() {
