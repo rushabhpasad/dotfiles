@@ -38,3 +38,5 @@
 [gpg "ssh"]
 	program = 
 	allowedSignersFile = 
+[credential]
+	helper = osxkeychain

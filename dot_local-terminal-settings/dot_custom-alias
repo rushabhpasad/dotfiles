@@ -36,6 +36,8 @@ alias p="ping google.com"
 alias wget="curl -O"
 alias ssho='ssh -o ForwardAgent=yes'
 
+alias claude='claude -c'
+
 alias docker-compose='docker compose'
 alias dc='docker compose'
 
