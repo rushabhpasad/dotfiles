@@ -4,5 +4,4 @@ emulate zsh
 
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
-export USE_AWS_PS1=false
 # source /Users/rpasad/.aws_profile
