@@ -1,1 +1,11 @@
+# Needed for GPG - Github signing setup
 export GPG_TTY=$(tty)
+
+# needed to prevent default AWS prompt and user starship
+export USE_AWS_PS1=false
+
+# needed to prevent AI tools to pre-load MCP and use only when needed
+export ENABLE_TOOL_SEARCH=true
+
+# export env secrets for runtime
+[ -r ~/secrets/.env-exports.sh ] && source ~/secrets/.env-exports.sh
