@@ -23,26 +23,10 @@ sso_role_name = AdministratorAccess
 region = ap-south-1
 output = json
 
-[profile sm-dev]
-sso_session = stl-google
-sso_account_id = 021891582190
-sso_role_name = AdministratorAccess
-region = ap-south-1
-output = json
-
-[profile sm-prod]
-sso_session = stl-google
-sso_account_id = 021891582293
-sso_role_name = AdministratorAccess
-region = ap-south-1
-output = json
-
-[profile sm-sandbox]
-sso_session = stl-google
-sso_account_id = 061039791346
-sso_role_name = AdministratorAccess
-region = ap-south-1
-output = json
+[profile dev-site]
+role_arn = arn:aws:iam::920373023589:role/DevWebsiteRole
+source_profile = stl-dev
+region = us-east-1
 
 [sso-session stl-google]
 sso_start_url = https://d-9067d11750.awsapps.com/start/#
