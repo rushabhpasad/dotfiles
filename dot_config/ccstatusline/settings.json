@@ -1,0 +1,80 @@
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "1",
+        "type": "model",
+        "color": "cyan"
+      },
+      {
+        "id": "3",
+        "type": "context-percentage",
+        "color": "brightBlack"
+      },
+      {
+        "id": "5",
+        "type": "session-cost",
+        "color": "magenta"
+      },
+      {
+        "id": "7",
+        "type": "session-clock",
+        "color": "yellow"
+      },
+      {
+        "id": "deaa6719-efa4-4842-bb72-a8115e9dbb6f",
+        "type": "context-bar"
+      }
+    ],
+    [
+      {
+        "id": "d3714b53-8ce7-4915-b6e0-1507294031f7",
+        "type": "block-timer",
+        "backgroundColor": "bgRed"
+      },
+      {
+        "id": "7838042d-03b0-4ba5-96b9-6f7aea2fe93f",
+        "type": "reset-timer",
+        "backgroundColor": "bgBlue"
+      },
+      {
+        "id": "ab5f18dc-404f-4865-90d5-76ef1d739b12",
+        "type": "session-usage",
+        "backgroundColor": "bgBrightMagenta"
+      },
+      {
+        "id": "aa56cc87-bb84-47a5-9fe1-8cc10da5e5ff",
+        "type": "weekly-usage",
+        "backgroundColor": "bgBrightWhite"
+      },
+      {
+        "id": "458ce64a-ac1c-45da-a94c-cb4a6a1dbcd2",
+        "type": "weekly-reset-timer",
+        "backgroundColor": "bgBrightBlack"
+      }
+    ],
+    []
+  ],
+  "flexMode": "full-minus-40",
+  "compactThreshold": 60,
+  "colorLevel": 2,
+  "defaultPadding": " ",
+  "inheritSeparatorColors": false,
+  "globalBold": false,
+  "minimalistMode": false,
+  "powerline": {
+    "enabled": true,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [],
+    "endCaps": [],
+    "theme": "solarized",
+    "autoAlign": true,
+    "continueThemeAcrossLines": false
+  }
+}
