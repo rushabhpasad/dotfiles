@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(/Users/rpasad/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7/skills/brainstorming/scripts/start-server.sh:*)",
+      "Bash(rtk *)",
+      "Bash(npx *)",
+      "Bash(npm *)",
+      "Bash(pnpm *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git pull *)",
+      "Bash(git checkout *)",
+      "Bash(git branch *)",
+      "Bash(gh *)",
+      "Bash(mv *)",
+      "Bash(cp *)",
+      "Bash(mkdir *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Read(**)",
+      "Edit(**)",
+      "Write(**)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(rm -r *)",
+      "Bash(sudo *)",
+      "Bash(chmod *)",
+      "Bash(chown *)",
+      "Bash(curl * | bash)",
+      "Bash(wget * | bash)",
+      "Bash(cat ~/.env*)",
+      "Bash(cat ~/.aws/*)",
+      "Bash(cat ~/.ssh/*)",
+      "Bash(env)",
+      "Bash(printenv)",
+      "Bash(export *)",
+      "Bash(* > /etc/*)",
+      "Bash(ssh *)",
+      "Bash(scp *)"
+    ],
+    "defaultMode": "default"
+  },
+  "model": "sonnet[1m]",
+  "hooks": {
+    "ConfigChange": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "CwdChanged": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "Elicitation": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "ElicitationResult": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "InstructionsLoaded": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "PermissionDenied": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "PostCompact": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/rpasad/.claude/hooks/rtk-rewrite.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "StopFailure": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "TaskCompleted": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "TeammateIdle": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0
+  },
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "document-skills@anthropic-agent-skills": true,
+    "caveman@caveman": false
+  },
+  "extraKnownMarketplaces": {
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "mcpServers": {}
+}
