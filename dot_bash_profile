@@ -1,7 +1,5 @@
-source ~/.profile
-[ -r ~/.bashrc ] && source ~/.bashrc
-
 [ -r ~/.profile ] && source ~/.profile
+[ -r ~/.bashrc ] && source ~/.bashrc
 
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
@@ -20,4 +18,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-

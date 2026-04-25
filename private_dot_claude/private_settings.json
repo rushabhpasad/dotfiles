@@ -6,6 +6,7 @@
       "Bash(rtk *)",
       "Bash(npx *)",
       "Bash(npm *)",
+      "Bash(node *)",
       "Bash(pnpm *)",
       "Bash(git status)",
       "Bash(git diff *)",
@@ -24,7 +25,9 @@
       "Bash(cat *)",
       "Read(**)",
       "Edit(**)",
-      "Write(**)"
+      "Write(**)",
+      "Read(~/.claude/plugins/*)",
+      "Read(~/.claude/skills/*)"
     ],
     "deny": [
       "Bash(rm -rf *)",
@@ -46,7 +49,6 @@
     ],
     "defaultMode": "default"
   },
-  "model": "sonnet[1m]",
   "hooks": {
     "ConfigChange": [
       {
@@ -196,11 +198,15 @@
     "padding": 0
   },
   "enabledPlugins": {
-    "swift-lsp@claude-plugins-official": false,
+    "swift-lsp@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "document-skills@anthropic-agent-skills": true,
-    "caveman@caveman": false
+    "caveman@caveman": false,
+    "claude-mem@thedotmack": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
@@ -213,6 +219,12 @@
       "source": {
         "source": "github",
         "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "thedotmack": {
+      "source": {
+        "source": "github",
+        "repo": "thedotmack/claude-mem"
       }
     }
   },

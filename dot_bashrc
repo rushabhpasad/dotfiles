@@ -1,10 +1,18 @@
-alias reload="source ~/.bashrc"
+# History
+HISTSIZE=100000000
+HISTFILESIZE=100000000
+
 
 # Custom aliases
-if [ -r ~/local-terminal-settings/.custom-alias ]; then
-    source ~/local-terminal-settings/.custom-alias
+alias reload="source ~/.bashrc"
+if [ -r ~/.local-terminal-settings/.custom-alias ]; then
+    source ~/.local-terminal-settings/.custom-alias
 fi
 
 # Activate Starship
 eval "$(starship init bash)"
+
+if [ -r "$HOME/.local/bin/env" ]; then
+	source "$HOME/.local/bin/env"
+fi
 

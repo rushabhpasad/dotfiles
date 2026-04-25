@@ -54,7 +54,33 @@
         "backgroundColor": "bgBrightBlack"
       }
     ],
-    []
+    [
+      {
+        "id": "1c719aed-ec94-476c-be2c-36ba5d169566",
+        "type": "tokens-total",
+        "backgroundColor": "bgBrightBlack"
+      },
+      {
+        "id": "35b1a33c-1c4f-40d6-ae87-cc3eec00b934",
+        "type": "tokens-input",
+        "backgroundColor": "bgWhite"
+      },
+      {
+        "id": "9e22db80-f15b-4970-8411-55d9927c8dbd",
+        "type": "tokens-output",
+        "backgroundColor": "bgGreen"
+      },
+      {
+        "id": "9e70f09a-eaba-4764-8a2c-937ae7626701",
+        "type": "tokens-cached",
+        "backgroundColor": "bgBrightGreen"
+      },
+      {
+        "id": "8f10dc1e-077e-44a5-922c-cd1a8b8d7804",
+        "type": "git-branch",
+        "backgroundColor": "bgCyan"
+      }
+    ]
   ],
   "flexMode": "full-minus-40",
   "compactThreshold": 60,
