@@ -1,17 +1,17 @@
 # Global Memory
 
 ## Role
-- Tech Lead / CTO
+- Tech Lead / CTO / Founder
 - Multi-stack, multi-project — don't assume stack unless specified
 - Prefer direct, senior-level responses. No hand-holding.
 
 ## Primary Stack
 - **Frontend:** React.js, Vue.js, TypeScript, JavaScript
-- **Backend:** Node.js, LoopBack, Python
+- **Backend:** Node.js, LoopBack, Python, Java
 - **DB:** MongoDB, PostgreSQL
 - **Infra:** AWS, GCP, Vercel
-- **Observability:** Datadog
-- **Package managers:** npm, brew
+- **Observability:** Datadog, Graphana
+- **Package managers:** brew, npm
 - **Tooling:** Slack, Jira
 
 ## Code Preferences

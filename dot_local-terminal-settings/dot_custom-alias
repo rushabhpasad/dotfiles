@@ -1,6 +1,6 @@
 ########## ALIASES #################
 
-# Git shortcuts
+# Git
 alias st="git st"
 alias gdiff="git diff"
 alias pull="git pull && git submodule sync --recursive && git submodule update --init --recursive"
@@ -9,7 +9,7 @@ alias stash="git stash"
 alias co="git checkout"
 alias gprune="rm .git/refs/remotes/origin/*"
 
-# kubektl shortcuts
+# kubectl
 alias k='kubectl'
 alias kdq='kubectl describe quota'
 alias kd='kubectl get deployments'
@@ -19,64 +19,32 @@ alias kl='kubectl logs'
 alias kuse='kubectl config use-context'
 alias kset='kubectl config set-context --current --namespace'
 
-# My Terminal shortcuts
+# Docker
+alias docker-compose='docker compose'
+alias dc='docker compose'
+
+# Terminal
 alias rmds="find . -name .DS_Store -delete &"
-#alias wget="curl -O"
 alias ..="cd .."
 alias l="ls --color -hal"
 alias c="clear"
 alias q="exit"
-# alias grep="grep -n --color" 
+alias wget="curl -O"
 alias hist="history 1"
-alias h="history -10" # last 10 history commands
-alias hg="hist | grep " # +command
+alias h="history -10"
+alias hg="hist | grep "
 alias r="reload"
 alias p="ping google.com"
-#alias killcamera="sudo killall VDCAssistant"
-alias wget="curl -O"
 alias ssho='ssh -o ForwardAgent=yes'
+alias killcamera="sudo killall VDCAssistant"
 
+# Claude / AI
 alias clauder='claude --resume'
+alias claudea='CLAUDE_CONFIG_DIR=~/.claude-abhishek claude'
+alias claude-mem='/Users/rpasad/.bun/bin/bun "/Users/rpasad/.claude/plugins/cache/thedotmack/claude-mem/12.3.9/scripts/worker-service.cjs"'
+alias claude-chats='uvx --from git+https://github.com/nikbq/claude-resume.git claude-resume'
 
-alias docker-compose='docker compose'
-alias dc='docker compose'
-
-# scripts
+# Scripts
 alias chezbackup="~/scripts/chezmoi-auto-commit.sh"
 alias bb="~/scripts/brew-maintenance.sh"
 alias deepclean="~/scripts/quarterly-deep-clean.sh"
-
-
-########### EXPORTS + MISC ################
-
-# Terminal Colors
-#export CLICOLOR=1
-#export LSCOLORS=GxFxCxDxBxegedabagaced
-
-# Araxis Compare
-export PATH=$PATH:/Applications/Araxis\ Merge.app/Contents/Utilities
-
-# JAVA HOME/PATH
-export JAVA_HOME=/opt/homebrew/Cellar/openjdk/21.0.1/libexec/openjdk.jdk/Contents/Home
-
-### Java 21
-# export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-# export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
-
-### Java 17
-# export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
-# export CPPFLAGS="-I/opt/homebrew/opt/openjdk@17/include"
-
-
-# History Size
-setopt APPEND_HISTORY
-HISTSIZE=100000000
-HISTFILESIZE=100000000
-SAVEHIST=$HISTSIZE
-
-# pyenv
-if command -v pyenv >/dev/null; then eval "$(pyenv init --path)"; eval "$(pyenv init -)"; fi
-
-# AWS
-export AWS_PROFILE=stl-admin
-export AWS_DEFAULT_REGION=ap-south-1

@@ -1,24 +1,48 @@
-[ -r ~/.zprofile ] && source ~/.zprofile
+# Source .profile in non-login interactive shells (login shells get it via .zprofile)
+[ -z "$PROFILE_LOADED" ] && [ -r ~/.profile ] && source ~/.profile
+
+# History
+HISTSIZE=100000000
+HISTFILESIZE=100000000
+SAVEHIST=$HISTSIZE
+setopt APPEND_HISTORY
+
+# Activate homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Activate fnm
+# eval "$(fnm env --use-on-cd)"
+eval "$(fnm env)"
+
+# Activate pyenv
+if command -v pyenv >/dev/null; then
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+fi
+
+# Activate sheldon
+eval "$(sheldon source)"
 
 # Activate Starship
 eval "$(starship init zsh)"
 
-# zsh completion
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+# Aggregate all fpath additions before initializing completions
+fpath=(/Users/rpasad/.docker/completions $fpath)
 
-  autoload -Uz compinit
-  compinit
-fi
+# Initialize completions once
+autoload -Uz compinit && compinit
+autoload bashcompinit && bashcompinit
 
-# zsh completion for eksctl
-fpath=($fpath ~/.zsh/completion)
-
-#kubectl completion
+# kubectl completion
 [[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
 
+# AWS Autocomplete
+complete -C '/opt/homebrew/bin/aws_completer' aws
+
+# bun completions
+[ -s "/Users/rpasad/.bun/_bun" ] && source "/Users/rpasad/.bun/_bun"
+
 # SSH Config File Completion
-# helps autocomplete hosts in ssh (+ tab) command
 h=()
 if [[ -r ~/.ssh/config ]]; then
   h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config)"}:#Host *}#Host }:#*[*?]*})
@@ -39,25 +63,6 @@ if [ -r ~/.local-terminal-settings/.zsh-functions ]; then
     source ~/.local-terminal-settings/.zsh-functions
 fi
 
-# NVM
-if [ -r ~/.zsh-nvm/zsh-nvm.plugin.zsh ]; then
-    source ~/.zsh-nvm/zsh-nvm.plugin.zsh
-fi
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-# End of NVM settings
-
-# AWS Autocomplete initialization
-autoload bashcompinit && bashcompinit
-autoload -Uz compinit && compinit
-complete -C '/opt/homebrew/bin/aws_completer' aws
-# End AWS Autocomplete initialization
-
-export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
-export PATH="/usr/local/bin/:$PATH"
-export PATH="/opt/homebrew/opt/php@7.2/sbin:$PATH"
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -73,15 +78,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-
 # Added by Antigravity
 export PATH="/Users/rpasad/.antigravity/antigravity/bin:$PATH"
 
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/rpasad/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
-
-# Added by Antigravity
-export PATH="/Users/rpasad/.antigravity/antigravity/bin:$PATH"

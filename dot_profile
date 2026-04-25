@@ -1,11 +1,39 @@
 # Needed for GPG - Github signing setup
 export GPG_TTY=$(tty)
 
-# needed to prevent default AWS prompt and user starship
+# Prevent default AWS prompt, use starship instead
 export USE_AWS_PS1=false
 
-# needed to prevent AI tools to pre-load MCP and use only when needed
+# Prevent AI tools from pre-loading MCP
 export ENABLE_TOOL_SEARCH=true
 
-# export env secrets for runtime
+# Java
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+# AWS
+export AWS_PROFILE=stl-admin
+export AWS_DEFAULT_REGION=ap-south-1
+
+# Anthropic / Claude
+# export ANTHROPIC_MODEL=claude-sonnet-4-6[1m]
+export CLAUDE_CODE_MAX_OUTPUT_TOKENS=100000
+export ENABLE_LSP_TOOL=1
+
+# Bun - installed by claude-mem
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Tool paths
+export PATH="/opt/homebrew/opt/postgresql/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="/opt/homebrew/opt/php/sbin:$PATH"
+export PATH="$PATH:/Applications/Araxis Merge.app/Contents/Utilities"
+export PATH="/Users/rpasad/.antigravity/antigravity/bin:$PATH"
+
+# Secrets
 [ -r ~/secrets/.env-exports.sh ] && source ~/secrets/.env-exports.sh
+
+# Local bin
+[ -r "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
+
+export PROFILE_LOADED=1
