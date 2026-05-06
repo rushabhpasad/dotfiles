@@ -39,10 +39,10 @@ log "Starting quarterly deep clean..."
 # --------------------------------------------------
 # Prevent running on battery (safety)
 # --------------------------------------------------
-if pmset -g batt | grep -q "Battery Power"; then
-  log "On battery. Skipping deep clean."
-  exit 0
-fi
+# if pmset -g batt | grep -q "Battery Power"; then
+#   log "On battery. Skipping deep clean."
+#   exit 0
+# fi
 
 # --------------------------------------------------
 # Docker cleanup
