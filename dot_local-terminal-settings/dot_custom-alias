@@ -39,6 +39,7 @@ alias ssho='ssh -o ForwardAgent=yes'
 alias killcamera="sudo killall VDCAssistant"
 
 # Claude / AI
+alias claude-testlify='CLAUDE_CONFIG_DIR=~/.claude-testlify claude'
 alias claude-abhishek='CLAUDE_CONFIG_DIR=~/.claude-abhishek claude'
 alias claude-deepseek='CLAUDE_CONFIG_DIR=~/.claude-deepseek claude'
 alias claude-mem='/Users/rpasad/.bun/bin/bun "/Users/rpasad/.claude/plugins/cache/thedotmack/claude-mem/12.3.9/scripts/worker-service.cjs"'

@@ -8,14 +8,14 @@
         "color": "cyan"
       },
       {
-        "id": "3",
-        "type": "context-percentage",
-        "color": "brightBlack"
-      },
-      {
         "id": "5",
         "type": "session-cost",
         "color": "magenta"
+      },
+      {
+        "id": "70907a8a-3ab3-4275-8475-575038e35ebc",
+        "type": "block-timer",
+        "backgroundColor": "bgBrightCyan"
       },
       {
         "id": "7",
@@ -29,19 +29,19 @@
     ],
     [
       {
-        "id": "d3714b53-8ce7-4915-b6e0-1507294031f7",
-        "type": "block-timer",
-        "backgroundColor": "bgRed"
-      },
-      {
-        "id": "7838042d-03b0-4ba5-96b9-6f7aea2fe93f",
-        "type": "reset-timer",
-        "backgroundColor": "bgBlue"
+        "id": "a8aaefa2-d96b-48b6-a519-8dbc7c5788b7",
+        "type": "thinking-effort",
+        "backgroundColor": "bgBrightCyan"
       },
       {
         "id": "ab5f18dc-404f-4865-90d5-76ef1d739b12",
         "type": "session-usage",
         "backgroundColor": "bgBrightMagenta"
+      },
+      {
+        "id": "7838042d-03b0-4ba5-96b9-6f7aea2fe93f",
+        "type": "reset-timer",
+        "backgroundColor": "bgBlue"
       },
       {
         "id": "aa56cc87-bb84-47a5-9fe1-8cc10da5e5ff",

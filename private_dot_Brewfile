@@ -8,6 +8,7 @@ brew "bash-completion@2"
 brew "chezmoi"
 brew "cloud-nuke"
 brew "cocoapods"
+brew "coreutils"
 brew "fnm"
 brew "gh"
 brew "git"
@@ -19,15 +20,14 @@ brew "helm"
 brew "jq"
 brew "k6"
 brew "k9s"
-brew "openjdk@21"
 brew "kotlin-language-server"
 brew "kubernetes-cli"
 brew "mas"
-brew "openjdk"
 brew "maven"
 brew "mongosh"
 brew "nginx"
 brew "openjdk@17"
+brew "pandoc"
 brew "php"
 brew "pinentry-mac"
 brew "postgresql@18", restart_service: :changed
@@ -69,7 +69,6 @@ cask "font-profont-nerd-font"
 cask "gimp"
 cask "github"
 cask "gitkraken"
-cask "gitkraken-cli"
 cask "google-chrome"
 cask "google-drive"
 cask "handbrake-app"
@@ -87,8 +86,6 @@ cask "redis-insight"
 cask "syntax-highlight"
 cask "visual-studio-code"
 cask "vlc"
-cask "zed"
-cask "zettlr"
 cask "zoom"
 mas "1Password for Safari", id: 1569813296
 mas "Amphetamine", id: 937984704
@@ -102,6 +99,7 @@ mas "Pages", id: 361309726
 mas "PhotoScape X", id: 929507092
 mas "Prime Video", id: 545519333
 mas "QR Journal", id: 483820530
+mas "Simple Web Server", id: 1625925255
 mas "Slack", id: 803453959
 mas "Stockfish", id: 801463932
 mas "Super Agent", id: 1568262835
@@ -115,9 +113,7 @@ mas "Windows App", id: 1295203466
 mas "Xcode", id: 497799835
 vscode "anthropic.claude-code"
 vscode "continue.continue"
-vscode "eamodio.gitlens"
 vscode "esbenp.prettier-vscode"
-vscode "mongodb.mongodb-vscode"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"

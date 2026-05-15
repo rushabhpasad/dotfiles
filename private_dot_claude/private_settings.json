@@ -47,7 +47,6 @@
       "Bash(printenv)",
       "Bash(export *)",
       "Bash(* > /etc/*)",
-      "Bash(ssh *)",
       "Bash(scp *)"
     ],
     "defaultMode": "default"
@@ -210,28 +209,33 @@
     "claude-mem@thedotmack": true,
     "typescript-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
       "source": {
         "source": "github",
         "repo": "anthropics/skills"
-      }
+      },
+      "autoUpdate": true
     },
     "caveman": {
       "source": {
         "source": "github",
         "repo": "JuliusBrussee/caveman"
-      }
+      },
+      "autoUpdate": true
     },
     "thedotmack": {
       "source": {
         "source": "github",
         "repo": "thedotmack/claude-mem"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
   "mcpServers": {}
 }
