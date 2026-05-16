@@ -124,12 +124,31 @@ if [[ -n "$DIFF_OUTPUT" ]]; then
   # Commit + push (only if staged changes exist)
   # --------------------------------------------------
   if ! git diff --cached --quiet; then
-    COMMIT_MSG="auto: periodic dotfile backup ($(timestamp))"
+    committed=0
 
-    if run_cmd git commit -m "$COMMIT_MSG" && run_cmd git push; then
+    if command -v gk >/dev/null 2>&1; then
+      log "Generating AI commit message via gk..."
+      if run_cmd gk ai commit --force --add-description; then
+        committed=1
+      else
+        log "WARN: gk ai commit failed. Falling back to timestamped message."
+      fi
+    fi
+
+    if [[ $committed -eq 0 ]]; then
+      COMMIT_MSG="auto: periodic dotfile backup ($(timestamp))"
+      if run_cmd git commit -m "$COMMIT_MSG"; then
+        committed=1
+      else
+        log "ERROR: commit failed."
+        exit 1
+      fi
+    fi
+
+    if run_cmd git push; then
       log "Backup complete."
     else
-      log "ERROR: commit or push failed."
+      log "ERROR: push failed."
       exit 1
     fi
   else
