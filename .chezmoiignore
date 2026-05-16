@@ -67,6 +67,12 @@ __pycache__/**
 *.pyo
 
 # -------------------------------
+# Github Documentaion/Files
+# -------------------------------
+README.md
+CLAUDE.md
+
+# -------------------------------
 # Misc large or local-only data
 # -------------------------------
 Downloads/**
