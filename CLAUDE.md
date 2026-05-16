@@ -50,15 +50,24 @@ Chezmoi uses prefixes/suffixes to encode how files are deployed:
 2. **`~/secrets/`** — infra PEM keys, keystores, cloud creds. Never in Git.
 3. **`~/.config/chezmoi/age.txt`** — the age private key that decrypts all `*.age` files. Never in Git. Loss = permanent data loss.
 
-## Automated Backup
+## Backup Workflow
 
-A LaunchAgent (`private_Library/LaunchAgents/com.rpasad.chezmoi-backup.plist`) runs `scripts/executable_chezmoi-auto-commit.sh` every 6 hours. It:
-1. Regenerates `~/.Brewfile` from installed packages
-2. Runs `chezmoi diff` → `chezmoi re-add` if changes detected
-3. Commits and pushes with `auto: periodic dotfile backup (timestamp)` message
-4. Aborts if staged files match secret patterns (`.pem`, `.key`, `.age`, `credentials`)
+Backups are **manual** (run when you sit down at the machine). The previous LaunchAgent was removed because non-interactive runs can't reliably handle GPG-signed commits without a TTY for pinentry.
 
-Log: `~/chezmoi-auto.log`
+Run `~/scripts/chezmoi-auto-commit.sh` to:
+1. Regenerate `~/.Brewfile` from installed packages
+2. `git pull --rebase --autostash` to sync with remote (prevents silent push failures)
+3. Run `chezmoi diff` → `chezmoi re-add` if changes detected
+4. Refuse to commit if either of two scans flags the staged changes:
+   - **Filename**: matches `.pem`, `.key`, `.p12`, `.jks`, `.keystore`, `.env`, `.kdbx`, `age.txt`, `credentials/`, `id_rsa`/`id_ed25519`/`id_ecdsa`/`id_dsa`, `.aws/`, `.gnupg/`, `.netrc` (`.pub` files exempted)
+   - **Content**: `gitleaks git --staged` finds a secret pattern in the diff
+5. Commit and push with `auto: periodic dotfile backup (timestamp)`. Script exits non-zero (and skips the "Backup complete." log line) if commit or push fails.
+
+Log: `~/chezmoi-auto-commit.log` (rotates to `.1` at 5 MiB).
+
+## Maintenance Scripts
+
+`~/scripts/brew-maintenance.sh` and `~/scripts/quarterly-deep-clean.sh` are also manual. Both share an `shlock`-based lock at `~/.cache/brew-maintenance.lock` so they cannot run concurrent brew operations. Logs rotate at 5 MiB.
 
 ## Adding New Secrets
 

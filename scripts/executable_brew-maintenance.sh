@@ -3,24 +3,31 @@ set -euo pipefail
 
 PATH="/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH
+
 LOG="$HOME/$(basename "$0" .sh).log"
+LOG_MAX_BYTES=5242880  # 5 MiB
+LOCK="$HOME/.cache/brew-maintenance.lock"
 
 timestamp() {
   date '+%Y-%m-%d %H:%M:%S'
 }
 
 log() {
-  local msg="[$(timestamp)] $*"
+  local msg
+  msg="[$(timestamp)] $*"
+
+  if [[ -f "$LOG" && $(stat -f%z "$LOG" 2>/dev/null || echo 0) -gt $LOG_MAX_BYTES ]]; then
+    mv "$LOG" "$LOG.1"
+  fi
+
   echo "$msg" >> "$LOG"
 
-  # Print to terminal only if interactive
   if [[ -t 1 ]]; then
     echo "$msg"
   fi
 }
 
 run_cmd() {
-  # Runs a command with proper logging + resilience
   if [[ -t 1 ]]; then
     if ! "$@" 2>&1 | tee -a "$LOG"; then
       log "WARN: command failed → $*"
@@ -37,12 +44,14 @@ run_cmd() {
 log "Starting brew maintenance..."
 
 # --------------------------------------------------
-# Prevent running if another brew is active
+# Mutual exclusion via shlock (stale-PID safe)
 # --------------------------------------------------
-if pgrep -x brew >/dev/null 2>&1; then
-  log "Brew already running. Skipping."
+mkdir -p "$(dirname "$LOCK")"
+if ! /usr/bin/shlock -f "$LOCK" -p $$ >/dev/null 2>&1; then
+  log "Another brew job is running (lock: $LOCK). Skipping."
   exit 0
 fi
+trap 'rm -f "$LOCK"' EXIT
 
 # --------------------------------------------------
 # Update brew metadata
@@ -69,7 +78,6 @@ OUTDATED_CASKS="$(brew outdated --cask --greedy --quiet || true)"
 if [[ -n "$OUTDATED_CASKS" ]]; then
   log "Reinstalling outdated casks..."
 
-  # Read safely line-by-line
   while IFS= read -r cask; do
     [[ -z "$cask" ]] && continue
 

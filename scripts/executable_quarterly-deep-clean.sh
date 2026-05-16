@@ -5,16 +5,23 @@ PATH="/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH
 
 LOG="$HOME/$(basename "$0" .sh).log"
+LOG_MAX_BYTES=5242880  # 5 MiB
+BREW_LOCK="$HOME/.cache/brew-maintenance.lock"  # shared with brew-maintenance.sh
 
 timestamp() {
   date '+%Y-%m-%d %H:%M:%S'
 }
 
 log() {
-  local msg="[$(timestamp)] $*"
+  local msg
+  msg="[$(timestamp)] $*"
+
+  if [[ -f "$LOG" && $(stat -f%z "$LOG" 2>/dev/null || echo 0) -gt $LOG_MAX_BYTES ]]; then
+    mv "$LOG" "$LOG.1"
+  fi
+
   echo "$msg" >> "$LOG"
 
-  # Print to terminal if interactive
   if [[ -t 1 ]]; then
     echo "$msg"
   fi
@@ -35,14 +42,6 @@ run_cmd() {
 }
 
 log "Starting quarterly deep clean..."
-
-# --------------------------------------------------
-# Prevent running on battery (safety)
-# --------------------------------------------------
-# if pmset -g batt | grep -q "Battery Power"; then
-#   log "On battery. Skipping deep clean."
-#   exit 0
-# fi
 
 # --------------------------------------------------
 # Docker cleanup
@@ -74,17 +73,27 @@ if command -v xcrun >/dev/null 2>&1; then
 fi
 
 # --------------------------------------------------
-# Brew deep cleanup
+# Brew deep cleanup (guarded by shared brew lock)
 # --------------------------------------------------
 if command -v brew >/dev/null 2>&1; then
-  log "Brew deep cleanup..."
-  run_cmd brew cleanup -s || true
+  mkdir -p "$(dirname "$BREW_LOCK")"
+  if /usr/bin/shlock -f "$BREW_LOCK" -p $$ >/dev/null 2>&1; then
+    trap 'rm -f "$BREW_LOCK"' EXIT
 
-  BREW_CACHE="$HOME/Library/Caches/Homebrew"
-  if [[ -d "$BREW_CACHE" ]]; then
-    log "Clearing Homebrew cache..."
-    rm -rf -- "$BREW_CACHE"
-    mkdir -p "$BREW_CACHE"
+    log "Brew deep cleanup..."
+    run_cmd brew cleanup -s || true
+
+    BREW_CACHE="$HOME/Library/Caches/Homebrew"
+    if [[ -d "$BREW_CACHE" ]]; then
+      log "Clearing Homebrew cache..."
+      rm -rf -- "$BREW_CACHE"
+      mkdir -p "$BREW_CACHE"
+    fi
+
+    rm -f "$BREW_LOCK"
+    trap - EXIT
+  else
+    log "Brew lock held by another process. Skipping brew section."
   fi
 fi
 
