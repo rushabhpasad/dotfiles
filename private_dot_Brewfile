@@ -115,6 +115,7 @@ mas "Xcode", id: 497799835
 vscode "anthropic.claude-code"
 vscode "continue.continue"
 vscode "esbenp.prettier-vscode"
+vscode "github.copilot-chat"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"

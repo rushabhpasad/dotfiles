@@ -35,6 +35,8 @@
 
 ## Task Delegation
 
+**Prefer sub-agent driven execution whenever possible.** Decompose non-trivial work into discrete tasks and dispatch them to subagents rather than executing everything in the main context. This protects the main context window, parallelizes independent work, and keeps the main thread focused on planning and synthesis. Use the `superpowers:subagent-driven-development` and `superpowers:dispatching-parallel-agents` skills as a guide.
+
 When spawning subagents, use the cheapest model that can handle the task:
 - Haiku: bulk mechanical tasks - no judgment needed
 - Sonnet: scoped research, code exploration, synthesis
@@ -59,6 +61,9 @@ When making changes to codebases -
 - Update /docs/* for deeper understanding of modules/components/systems/projects.
 
 If a file is not present, propose to create the file.
+
+## General Rules
+@rules/general-rules.md
 
 ## Custom Skills
 @RTK.md
