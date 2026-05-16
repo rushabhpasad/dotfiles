@@ -14,24 +14,12 @@
 - **Package managers:** brew, npm
 - **Tooling:** Slack, Jira
 
-## Code Preferences
-- Functional components, hooks over class components (React)
-- async/await over .then()
-- Named exports over default exports
-- Early returns over nested conditionals
-- No comments unless logic is non-obvious
-- TypeScript strict mode by default
-
 ## Architecture Preferences
-- 12-factor app principles
 - Prefer explicit over magic
-- Design for observability (structured logs, meaningful errors)
 - API-first design
 
 ## Git
-- Conventional commits: feat/fix/chore/refactor/perf
 - Never commit directly to main
-- PRs should be small and focused
 
 ## Task Delegation
 
@@ -52,15 +40,6 @@ Spawn rules:
 - Dynamic pages / auth walls → agent-browser CLI 
 - PDFs → pdftotext (not Read tool)
 - Repeated fetch patterns → wrap as reusable tool
-
-## Docs
-When making changes to codebases -
-- Update README.md when the consumer-facing understanding of the project changes. Do not overload README.md with operational rules for agents.
-- Update AGENTS.md / CLAUDE.md when the AI/developer operational behavior changes. AGENTS.md is preferred over CLAUDE.md.
-- Update ARCHITECTURE.md when System design and decisions are changed.
-- Update /docs/* for deeper understanding of modules/components/systems/projects.
-
-If a file is not present, propose to create the file.
 
 ## General Rules
 @rules/general-rules.md
