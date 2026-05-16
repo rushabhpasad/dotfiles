@@ -1,0 +1,44 @@
+# OS metadata
+.DS_Store
+**/.DS_Store
+._*
+Thumbs.db
+
+# Editor / IDE
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+.fleet/
+
+# Claude
+.claude/
+
+# Logs
+*.log
+bootstrap.log
+chezmoi-auto-commit.log
+chezmoi-auto-commit.log.*
+
+# Caches
+.cache/
+__pycache__/
+*.pyc
+
+# Defense-in-depth: unencrypted secret material should never land in source.
+# Encrypted (`encrypted_*.age`) variants are tracked and unaffected by these patterns.
+age.txt
+.netrc
+id_rsa
+id_ed25519
+id_ecdsa
+id_dsa
+*.pem
+*.p12
+*.jks
+*.keystore
+*.kdbx
+.env
+.env.*
+!.env.example

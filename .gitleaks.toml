@@ -1,0 +1,15 @@
+title = "gitleaks config for chezmoi dotfiles"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "GPG signingKey fingerprint in dot_gitconfig is a public key ID, not a secret"
+targetRules = ["generic-api-key"]
+paths = [
+    '''(^|/)dot_gitconfig$''',
+    '''(^|/)dot_gitconfig-testlify$''',
+]
+regexes = [
+    '''signingKey\s*=\s*[A-Fa-f0-9]{40}''',
+]

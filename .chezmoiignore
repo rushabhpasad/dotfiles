@@ -67,10 +67,12 @@ __pycache__/**
 *.pyo
 
 # -------------------------------
-# Github Documentaion/Files
+# Repo-meta / not deployed to home
 # -------------------------------
 README.md
 CLAUDE.md
+.gitignore
+.gitleaks.toml
 
 # -------------------------------
 # Misc large or local-only data

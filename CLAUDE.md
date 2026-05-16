@@ -92,4 +92,4 @@ Runtime managers active: **fnm** (Node), **pyenv** (Python), **sheldon** (zsh pl
 
 ## Git Signing
 
-All commits in this repo are GPG-signed (`commit.gpgSign = true` in `dot_gitconfig`). The signing key is `B3E5F0F39452FAA21E8CADBB4199574005EEA5D7`. If GPG signing fails, check that `gpg-agent` is running.
+All commits in this repo are GPG-signed (`commit.gpgSign = true` in `dot_gitconfig`). The active signing key varies by profile (personal vs. Testlify via the conditional `includeIf` in `dot_gitconfig`) — check `git config user.signingKey` in the relevant working tree. If signing fails, confirm `gpg-agent` is running.

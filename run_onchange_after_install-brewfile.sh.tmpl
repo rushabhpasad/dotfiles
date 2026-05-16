@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Re-runs whenever the Brewfile content changes (hash embedded below).
+# Brewfile sha256: {{ include "private_dot_Brewfile" | sha256sum }}
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo "⚠️  brew not on PATH — skipping bundle install" >&2
+  exit 0
+fi
+
+if [ ! -f "$HOME/.Brewfile" ]; then
+  echo "⚠️  $HOME/.Brewfile not found — skipping bundle install" >&2
+  exit 0
+fi
+
+echo "📦 brew bundle (~/.Brewfile)..."
+brew bundle --file="$HOME/.Brewfile"
