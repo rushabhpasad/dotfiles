@@ -1,7 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+LOG="$HOME/bootstrap.log"
+LOG_MAX_BYTES=5242880  # 5 MiB
+
+if [[ -f "$LOG" && $(stat -f%z "$LOG" 2>/dev/null || echo 0) -gt $LOG_MAX_BYTES ]]; then
+  mv "$LOG" "$LOG.1"
+fi
+
+exec > >(tee -a "$LOG") 2>&1
+
+echo ""
+echo "=========================================="
 echo "🚀 Elite macOS bootstrap (Rushabh edition)"
+echo "    started at $(date '+%Y-%m-%d %H:%M:%S')"
+echo "=========================================="
 
 # --------------------------------------------------
 # 1. Xcode CLI tools
@@ -44,10 +57,22 @@ echo "✅ chezmoi ready"
 AGE_KEY="$HOME/.config/chezmoi/age.txt"
 
 if [ ! -f "$AGE_KEY" ]; then
+  if [[ ! -t 0 ]]; then
+    echo "❌ Cannot read AGE key from non-TTY stdin (piped/redirected execution)."
+    echo "   Run as: ./bootstrap.sh   (not via curl | bash)" >&2
+    exit 1
+  fi
+
   echo "🔐 Paste AGE key, then CTRL+D:"
   mkdir -p "$(dirname "$AGE_KEY")"
   cat > "$AGE_KEY"
   chmod 600 "$AGE_KEY"
+
+  if ! grep -q '^AGE-SECRET-KEY-' "$AGE_KEY"; then
+    echo "❌ Pasted content doesn't look like an age key (missing 'AGE-SECRET-KEY-' prefix)."
+    rm -f "$AGE_KEY"
+    exit 1
+  fi
 fi
 
 # --------------------------------------------------
@@ -60,7 +85,10 @@ if [ ! -d "$HOME/.local/share/chezmoi" ]; then
   chezmoi init --apply "$DOTFILES_REPO"
 else
   echo "🔄 Updating existing dotfiles..."
-  chezmoi update --apply
+  if ! chezmoi update --apply; then
+    echo "⚠️  chezmoi update failed (likely local uncommitted changes, merge conflict, or network issue)."
+    echo "   Continuing with existing source state. Resolve manually and re-run if needed."
+  fi
 fi
 
 # --------------------------------------------------
@@ -76,6 +104,14 @@ fi
 # ==================================================
 # macOS UX RESTORE (REAL CUSTOMIZATIONS ONLY)
 # ==================================================
+# Gated: runs once on first bootstrap. Re-run with FORCE_DEFAULTS=1 to reapply.
+
+DEFAULTS_SENTINEL="$HOME/.config/rpasad/bootstrap-defaults.done"
+
+if [[ -f "$DEFAULTS_SENTINEL" && "${FORCE_DEFAULTS:-0}" != "1" ]]; then
+  echo "⏭  macOS UX defaults already applied (sentinel: $DEFAULTS_SENTINEL)."
+  echo "   Use FORCE_DEFAULTS=1 ./bootstrap.sh to reapply."
+else
 
 echo "🎨 Applying macOS UX defaults..."
 
@@ -148,7 +184,10 @@ defaults write com.apple.universalaccess closeViewFlashScreenOnNotificationEnabl
 defaults write com.apple.universalaccess closeViewSplitScreenRatio -float 0.2
 defaults write com.apple.universalaccess closeViewZoomedIn -bool false
 
-echo "✅ macOS UX restored"
+  mkdir -p "$(dirname "$DEFAULTS_SENTINEL")"
+  touch "$DEFAULTS_SENTINEL"
+  echo "✅ macOS UX restored (sentinel written: $DEFAULTS_SENTINEL)"
+fi
 
 # --------------------------------------------------
 # 7. Dev directories
