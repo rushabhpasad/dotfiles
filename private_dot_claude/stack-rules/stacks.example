@@ -1,0 +1,24 @@
+# <project>/.claude/stacks — override for ~/.claude/hooks/detect-stack.sh
+#
+# Lists stack-rule files to load from ~/.claude/stack-rules/<name>.md at session start.
+# When present, this file COMPLETELY overrides auto-detection.
+#
+# Format:
+#   - one stack name per line, OR comma-separated on a line
+#   - '#' starts a line/inline comment
+#   - whitespace is trimmed
+#
+# Available stack names (must match ~/.claude/stack-rules/<name>.md):
+#   nodejs, nextjs-react, vuejs, python, java, mongodb
+
+nodejs
+mongodb
+
+# Equivalent one-liner:
+# nodejs, mongodb
+
+# Examples for other project shapes:
+#   Next.js + Mongo:    nextjs-react, nodejs, mongodb
+#   Nuxt + Mongo:       vuejs, nodejs, mongodb
+#   FastAPI + Mongo:    python, mongodb
+#   Spring Boot + Mongo: java, mongodb
