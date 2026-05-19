@@ -149,7 +149,12 @@
     "SessionStart": [
       {
         "matcher": "",
-        "hooks": []
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/rpasad/.claude/hooks/detect-stack.sh"
+          }
+        ]
       }
     ],
     "Stop": [
@@ -237,5 +242,6 @@
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "mcpServers": {}
+  "mcpServers": {},
+  "agentPushNotifEnabled": true
 }

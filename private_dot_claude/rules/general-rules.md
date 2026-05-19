@@ -4,15 +4,9 @@ These rules govern any AI-assisted change made to a codebase. Treat them as bind
 
 If a rule conflicts with explicit user instructions for a specific task, follow the user's instructions and surface the conflict; otherwise these rules win.
 
-Stack-specific conventions live alongside this file under `stacks/`. When working in a particular stack, **load the matching rules in addition to this file**:
+Stack-specific conventions live in `~/.claude/stack-rules/<name>.md` and are **auto-loaded at session start** by the `detect-stack` hook based on the project's manifest files (`package.json`, `pyproject.toml`, `pom.xml`, …). Available stacks: `nextjs-react`, `vuejs`, `nodejs`, `python`, `java`, `mongodb`.
 
-- `stacks/nextjs-react.md` — Next.js (App Router) + React + TypeScript
-- `stacks/vuejs.md` — Vue.js + TypeScript (Vite / Nuxt)
-- `stacks/nodejs.md` — Node.js services, APIs, CLIs, LoopBack
-- `stacks/python.md` — Python services and tooling (FastAPI / Django / Flask)
-- `stacks/java.md` — Java services (Spring Boot / general JVM)
-
-If a stack file does not yet exist for the stack you're working in, propose creating one rather than laying down stack-specific patterns ad hoc.
+To override auto-detection, create `<project>/.claude/stacks` with the desired stack names (comma- or newline-separated). If a stack file does not yet exist for the stack you're working in, propose creating one rather than laying down stack-specific patterns ad hoc.
 
 ---
 
