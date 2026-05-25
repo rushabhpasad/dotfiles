@@ -1,6 +1,6 @@
 # Java Rules
 
-Stack-specific rules. Load **alongside** `../general-rules.md` when working in a Java project (Spring Boot or general JVM).
+Stack-specific rules. Load **alongside** `../general-rules.md` for a Java project (Spring Boot or general JVM).
 
 ---
 
@@ -16,7 +16,7 @@ Stack-specific rules. Load **alongside** `../general-rules.md` when working in a
 
 ## File layout (Spring Boot)
 
-- **Package by feature, not by layer**: `com.company.<feature>` containing controller, service, repository, dto, model for that feature.
+- **Package by feature, not by layer**: `com.company.<feature>` containing controller, service, repository, dto, model.
 - `src/main/java/...` and `src/test/java/...` mirror each other.
 - `application.yml` for config; profile-specific overrides in `application-<profile>.yml`.
 - One public top-level type per file (Java requires this).
@@ -25,7 +25,7 @@ Stack-specific rules. Load **alongside** `../general-rules.md` when working in a
 
 ## Patterns
 
-- **Constructor injection only.** No field `@Autowired`, no setter injection. Makes testing trivial and mutations impossible.
+- **Constructor injection only.** No field `@Autowired`, no setter injection — testing stays trivial, mutations impossible.
   ```java
   @Service
   @RequiredArgsConstructor  // Lombok-generated constructor
@@ -35,7 +35,7 @@ Stack-specific rules. Load **alongside** `../general-rules.md` when working in a
   }
   ```
 - **Immutable value objects**: `record` for DTOs, `final` fields elsewhere.
-- `Optional<T>` for "may be absent" **return** values. Never store `Optional` in a field, never use it as a method parameter.
+- `Optional<T>` only for "may be absent" **return** values. Never store in a field; never as a method parameter.
 - Streams for transforms; classic loops when there's side-effecting logic.
 - **No raw types.** No unchecked casts without `@SuppressWarnings("unchecked")` + reason.
 - Lombok permitted: `@Value`, `@RequiredArgsConstructor`, `@Slf4j`, `@Builder`. **Avoid** `@SneakyThrows`, `@Data` on entities, `@EqualsAndHashCode(callSuper = ...)` foot-guns.
@@ -46,7 +46,7 @@ Stack-specific rules. Load **alongside** `../general-rules.md` when working in a
 ## Spring Boot specifics
 
 - Controllers thin; business logic in `@Service` beans; data access in `@Repository`.
-- **DTOs at the API boundary**; never expose JPA entities directly (lazy loading exceptions, accidental over-fetching, contract coupling).
+- **DTOs at the API boundary** — never expose JPA entities directly (lazy-loading exceptions, accidental over-fetching, contract coupling).
 - Validation via `jakarta.validation` annotations + `@Valid` on controller params.
 - Transactions at the service layer (`@Transactional`), not the controller. Read-only operations get `@Transactional(readOnly = true)`.
 - `@ConfigurationProperties` for typed config; avoid scattered `@Value("${...}")` strings.
@@ -56,7 +56,7 @@ Stack-specific rules. Load **alongside** `../general-rules.md` when working in a
 
 ## JPA / persistence
 
-- **Lazy fetching by default**; explicit fetch joins where needed. Watch for N+1 — log SQL in dev (`spring.jpa.show-sql=true` + Hibernate stats).
+- **Lazy fetching by default**; explicit fetch joins where needed. Watch for N+1 — log SQL in dev (`spring.jpa.show-sql=true`).
 - **Flyway or Liquibase** for migrations. `ddl-auto=update` is **forbidden** in non-dev environments.
 - Index every column used in `WHERE` / `JOIN` / `ORDER BY` at production scale.
 - Use `@Query` JPQL or Criteria API — never string-concatenate values into queries.
@@ -67,7 +67,7 @@ Stack-specific rules. Load **alongside** `../general-rules.md` when working in a
 ## Testing
 
 - **JUnit 5** + **AssertJ** for assertions. No JUnit 4 in new code.
-- **Mockito** for mocks; `@MockBean` only when Spring context is genuinely required.
+- **Mockito** for mocks; `@MockBean` only when Spring context is required.
 - **Testcontainers** for integration tests against real DBs / Kafka / Redis — don't mock the database.
 - `@SpringBootTest` is heavy — use slice tests (`@WebMvcTest`, `@DataJpaTest`) when you can.
 - One assertion concept per test; descriptive method names (`shouldRejectOrderWhenInventoryInsufficient`).
@@ -100,7 +100,6 @@ Stack-specific rules. Load **alongside** `../general-rules.md` when working in a
 - **Spring Security** with method-level `@PreAuthorize` for sensitive operations — not just URL-pattern security.
 - Input validation at the controller boundary; never trust client payloads.
 - Dependency audit: `mvn org.owasp:dependency-check-maven:check` or `./gradlew dependencyCheckAnalyze`. Resolve high-severity findings before release.
-- Parameterized JPQL / Criteria API — never string concatenation in queries.
 - Don't log full request bodies on auth endpoints.
-- CSRF protection on by default; only disable for stateless APIs with token auth.
+- CSRF on by default; only disable for stateless APIs with token auth.
 - BCrypt / Argon2 for password hashing — never MD5 / SHA1 / plain SHA-256.

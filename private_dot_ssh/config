@@ -2,7 +2,6 @@ LogLevel error
 StrictHostKeyChecking no  
 UserKnownHostsFile /dev/null  
 ServerAliveCountMax 18  
-ServerAliveInterval 5  
 GSSAPIAuthentication yes  
 GSSAPIDelegateCredentials yes  
 # User rpasad
@@ -17,18 +16,21 @@ Host *
   GSSAPIDelegateCredentials no  
   HostkeyAlgorithms +ssh-rsa
   PubkeyAcceptedAlgorithms +ssh-rsa
+  IdentitiesOnly yes
+  ServerAliveInterval 30
+
+Host stl
+  HostName 100.66.55.82
+  User stl
+  IdentityFile ~/.ssh/id_rsa
 
 Host stl-dev
   HostName 3.111.253.86
   User ec2-user
   IdentityFile ~/secrets/stl/dev/stl-dev-my-lightsail-instance-key-pair-01.pem
-  IdentitiesOnly yes
-  ServerAliveInterval 30
   
 Host stl-prod
   HostName 13.203.84.155
   User ubuntu
   IdentityFile ~/secrets/stl/prod/stl-lightsail.pem
-  IdentitiesOnly yes
-  ServerAliveInterval 30
   

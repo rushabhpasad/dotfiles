@@ -29,6 +29,11 @@ else
     grep -qE '"next"[[:space:]]*:' "$pkg" 2>/dev/null && add "nextjs-react" || true
     grep -qE '"(vue|nuxt|@nuxt/kit)"[[:space:]]*:' "$pkg" 2>/dev/null && add "vuejs" || true
     grep -qE '"(mongoose|mongodb)"[[:space:]]*:' "$pkg" 2>/dev/null && add "mongodb" || true
+    if grep -qE '"vite"[[:space:]]*:' "$pkg" 2>/dev/null \
+       && grep -qE '"react"[[:space:]]*:' "$pkg" 2>/dev/null \
+       && ! grep -qE '"next"[[:space:]]*:' "$pkg" 2>/dev/null; then
+      add "react-vite"
+    fi
   fi
 
   for f in pyproject.toml requirements.txt setup.py Pipfile; do

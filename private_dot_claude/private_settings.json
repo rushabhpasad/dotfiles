@@ -242,6 +242,5 @@
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "mcpServers": {},
   "agentPushNotifEnabled": true
 }

@@ -90,7 +90,7 @@ fi
 DIFF_OUTPUT="$(chezmoi diff || true)"
 if [[ -n "$DIFF_OUTPUT" ]]; then
   log "Changes detected. Re-adding tracked files..."
-  log "$DIFF_OUTPUT"
+#   log "$DIFF_OUTPUT"
 
   run_cmd chezmoi re-add || true
   run_cmd git add -u || true

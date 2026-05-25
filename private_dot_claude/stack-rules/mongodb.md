@@ -1,12 +1,12 @@
 # MongoDB Rules
 
-Stack-specific rules. Load **alongside** `../general-rules.md` when working in any project that uses MongoDB (with or without Mongoose), and **also** alongside the relevant runtime stack file (`nodejs.md`, `nextjs-react.md`, `python.md`, `java.md`).
+Stack-specific rules. Load **alongside** `../general-rules.md` and the relevant runtime stack (`nodejs`, `nextjs-react`, `react-vite`, `python`, `java`).
 
 ---
 
 ## 1. Naming conventions
 
-Consistent naming across the database, ORM/ODM, server code, and client code is **non-negotiable** — mismatches lead to confusing payload transforms and silent bugs.
+Consistent naming end-to-end (DB → ORM → server → client) is **non-negotiable** — mismatches cause silent bugs and bloat payload-transform code.
 
 | Layer | Convention | Example |
 |---|---|---|
@@ -30,16 +30,16 @@ Rules:
 
 - **Field names match end-to-end.** What's stored as `createdAt` in Mongo stays `createdAt` in the API response and in the TS interface. No silent `created_at` ↔ `createdAt` translation layers — they hide bugs.
 - **Collection name = plural of the Mongoose model name, camelCased.** Mongoose pluralizes automatically; verify it produces what you expect for irregular nouns (`Person` → `people`, not `persons`) and override with `mongoose.model('Person', schema, 'people')` when it doesn't.
-- **No reserved-ish keys** as top-level field names: avoid `type`, `class`, `new`, `default` as direct field names unless schema-required.
+- **No reserved-ish keys** as top-level field names: avoid `type`, `class`, `new`, `default` unless schema-required.
 - **Booleans are positive predicates**: `isActive`, `hasPaid`, `isDeleted` — not `inactive` or `notPaid`.
 - **Foreign references end in `Id`** for scalar refs (`userId`, `organizationId`) and `Ids` for arrays (`tagIds`).
-- **Timestamps**: `createdAt`, `updatedAt`, `deletedAt` (for soft delete), `<verb>At` for event timestamps (`publishedAt`, `archivedAt`).
+- **Timestamps**: `createdAt`, `updatedAt`, `deletedAt` (soft delete), `<verb>At` for events (`publishedAt`, `archivedAt`).
 
 ---
 
 ## 2. Schema design
 
-- **Model around access patterns**, not around normalized relational shape. Embed when reads dominate and the embedded data is bounded; reference when data is shared, mutated independently, or unbounded.
+- **Model around access patterns**, not relational normalization. Embed when reads dominate and the embedded data is bounded; reference when data is shared, mutated independently, or unbounded.
 - **Bounded arrays**: any array field must have a documented upper bound. Unbounded growth on a document (comments, events, logs) is a defect — split into a separate collection.
 - **Document size**: stay well under the 16 MB limit. In practice, target < 1 MB; anything larger is a design smell.
 - **Schema versioning**: include a `schemaVersion` field on documents whose shape will evolve. Migrate forward in a controlled job, not lazily in business code.
@@ -61,11 +61,11 @@ Rules:
     toObject: { virtuals: true, versionKey: false },
   })
   ```
-- **Validation in the schema**, not in the controller. Use `required`, `min`/`max`, `enum`, `match`, and custom validators. Validation errors are translated to HTTP at the error-handling boundary (see `nodejs.md`).
+- **Validation in the schema**, not the controller. Use `required`, `min`/`max`, `enum`, `match`, and custom validators. Translate validation errors to HTTP at the error-handling boundary.
 - **Virtuals** for derived fields that should appear in API responses but aren't stored.
 - **Pre/post hooks**: use sparingly. Hooks that mutate other documents create hidden coupling — prefer explicit service-layer calls.
 - **`lean()` for read-only queries** that don't need Mongoose documents — measurably faster and lower memory.
-- **Use `.exec()`** on queries — gives proper stack traces on errors. Don't rely on the thenable shortcut for production code.
+- **Use `.exec()`** on queries for proper stack traces — don't rely on the thenable shortcut in production.
 - **One schema per file**: `src/models/<Entity>.model.ts` exports the compiled model as a named export.
 
 ---
@@ -75,10 +75,10 @@ Rules:
 - **Every field used in a query filter, sort, or join (`$lookup`) at production scale must be indexed.** Verify with `.explain('executionStats')` — `COLLSCAN` on a hot path is a defect.
 - **Compound indexes follow the ESR rule**: **Equality → Sort → Range**. Order the fields in the index in that priority.
 - **Unique indexes** on natural keys (`email`, `slug`, external IDs). Always with a partial filter when the field is optional: `{ partialFilterExpression: { email: { $type: 'string' } } }`.
-- **Don't over-index**. Every index slows writes and consumes memory. Audit `db.collection.aggregate([{ $indexStats: {} }])` periodically and drop unused ones.
+- **Don't over-index** — every index slows writes and consumes memory. Audit with `db.collection.aggregate([{ $indexStats: {} }])` and drop unused ones.
 - **TTL indexes** for ephemeral data (sessions, password reset tokens, rate-limit buckets). Set on a `Date` field.
 - **Text / geo indexes**: at most one text index per collection; design the index fields deliberately. For full-text at scale, prefer Atlas Search over `$text`.
-- **Index creation in production**: use `{ background: true }` (default on modern versions) or roll out via maintenance windows — never block writes on a foreground build.
+- **Index creation in production**: `{ background: true }` (default on modern versions) or roll out in maintenance windows — never block writes on a foreground build.
 
 ---
 
@@ -108,16 +108,16 @@ Rules:
 
 ## 7. Transactions
 
-- Multi-document transactions are supported on replica sets and sharded clusters, **but**: they cost latency and lock contention. Don't reach for them when atomic operators on a single document suffice.
+- Multi-document transactions cost latency and lock contention. Don't reach for them when atomic operators on a single document suffice.
 - Wrap transactional code in `session.withTransaction(async () => { ... })` — handles retries on `TransientTransactionError` automatically.
 - **All operations inside a transaction must pass `{ session }`.** Forgetting it silently runs them outside the transaction.
-- Keep transactions **short**. Long-running transactions hold locks and can blow past the default 60s window.
+- Keep transactions **short** — they hold locks and can blow past the default 60s window.
 
 ---
 
 ## 8. Connection & client management
 
-- **One `MongoClient` (or one Mongoose connection) per process.** Reuse across requests — establishing a new connection per request will exhaust the pool.
+- **One `MongoClient` (or Mongoose connection) per process.** Reuse across requests — connecting per request exhausts the pool.
 - Connection string in env, never in code. Use a secret manager in prod (see `general-rules.md` §4.3).
 - Configure explicitly:
   - `maxPoolSize` (default 100 — often too high for serverless, too low for high-throughput services).
@@ -147,7 +147,7 @@ Rules:
 - **Sanitize / validate** at the API boundary: zod / joi / class-validator (Node), pydantic (Python), bean validation (Java). Reject unknown fields.
 - **Least-privilege users**: the application user has only `readWrite` on the app database — not `dbAdmin`, not `root`. Migrations and backups use separate, scoped users.
 - **TLS required** in transit. Atlas enforces this; on self-hosted, configure `tls=true` and verify certs.
-- **Encryption at rest**: enabled at the storage layer (Atlas does this automatically; self-hosted use WiredTiger encryption or volume-level encryption).
+- **Encryption at rest** at the storage layer (Atlas: automatic; self-hosted: WiredTiger or volume-level encryption).
 - **Field-level encryption** (CSFLE / Queryable Encryption) for highly sensitive fields (PII, health, payment) where regulation demands it.
 - **No PII in logs**: don't log full documents on error paths. Log `_id`s, not bodies.
 - **Audit logs** for admin actions and sensitive data access (ISO 27001 alignment per `general-rules.md` §4.1).
@@ -161,13 +161,13 @@ Rules:
 - **`$in` arrays** should be bounded (< ~100 elements). Larger sets need a different access pattern (join collection, batch query).
 - **Hot-key writes**: avoid making every write target the same document (e.g., a global counter). Shard the write across N docs and aggregate on read.
 - **Caching**: read-through cache (Redis) for hot read paths that don't need real-time consistency. Invalidate on the write path.
-- **Sharding**: only when a single replica set is genuinely saturated. Shard key is a one-way decision — choose with care: high cardinality, evenly distributed, used in the most common queries.
+- **Sharding**: only when a single replica set is genuinely saturated. Shard key is a one-way decision — high cardinality, evenly distributed, used in common queries.
 
 ---
 
 ## 12. Testing
 
-- **Don't mock the database.** Integration tests run against a real MongoDB — `mongodb-memory-server` for fast in-memory replica sets in Node, Testcontainers in Java/Python. (Reinforces `general-rules.md` §3.2.)
+- **Don't mock the database.** Integration tests run against a real MongoDB — `mongodb-memory-server` for Node, Testcontainers for Java/Python. (Reinforces `general-rules.md` §3.2.)
 - **Fresh database per test suite** (or per test for isolation-critical cases). Drop collections in `afterEach` / `afterAll`.
 - **Test the indexes**: assert that the queries you care about hit the indexes you expect (`.explain('executionStats').executionStats.totalDocsExamined`).
 - **Seed via factories**, not fixture JSON dumps that rot.

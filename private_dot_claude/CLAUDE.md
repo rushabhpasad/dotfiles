@@ -43,6 +43,7 @@ Spawn rules:
 
 ## General Rules
 @rules/general-rules.md
+- When working with /tmp directory, use a uuid based directory to avoid clashes with other processes accessing the same directory
 
 ## Custom Skills
 @RTK.md

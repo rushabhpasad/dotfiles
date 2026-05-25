@@ -1,9 +1,9 @@
 # This is Git's per-user configuration file.
 [user]
 	name = Rushabh Pasad
-	email = rushabh@samyaktechlabs.com
-	signingKey = 27F63F9E37333E1AF248F23467B1C5F19E1AF77D
-[includeIf "gitdir:/Users/rpasad/Library/CloudStorage/GoogleDrive-rushabh.pasad@testlify.com/My Drive/git/"]
+	email = rushabh.pasad@testlify.com
+	signingKey = B3E5F0F39452FAA21E8CADBB4199574005EEA5D7
+[includeIf "gitdir:/Users/rpasad/testlify/"]
 	path = ~/.gitconfig-testlify
 [push]
     default = simple
@@ -21,17 +21,11 @@
     clean = git-lfs clean -- %f
 [init]
 	defaultBranch = main
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [commit]
 	template = /Users/rpasad/.stCommitMsg
 	gpgSign = true
 [gpg]
-	program = /opt/homebrew/bin/gpg
+	program = gpg
 	format = openpgp
 [tag]
 	forceSignAnnotated = true
