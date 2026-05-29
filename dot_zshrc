@@ -53,7 +53,7 @@ if [[ $#h -gt 0 ]]; then
 fi
 
 # Custom aliases
-alias reload="source ~/.zshrc"
+alias reload="unset PROFILE_LOADED && source ~/.zshrc"
 if [ -r ~/.local-terminal-settings/.custom-alias ]; then
     source ~/.local-terminal-settings/.custom-alias
 fi

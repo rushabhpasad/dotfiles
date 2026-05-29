@@ -7,6 +7,8 @@
     "allow": [
       "Bash(/Users/rpasad/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7/skills/brainstorming/scripts/start-server.sh:*)",
       "Bash(rtk *)",
+      "Bash(ssh stl-dev:*)",
+      "Bash(ssh stl-prod:*)",
       "Bash(npx *)",
       "Bash(npm *)",
       "Bash(node *)",
@@ -49,7 +51,7 @@
       "Bash(* > /etc/*)",
       "Bash(scp *)"
     ],
-    "defaultMode": "default"
+    "defaultMode": "auto"
   },
   "model": "opus[1m]",
   "hooks": {
@@ -242,5 +244,6 @@
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true
 }
