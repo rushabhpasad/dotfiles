@@ -43,3 +43,8 @@ Host dymon-staging
   HostName 99.79.72.60
   User ubuntu
   IdentityFile ~/secrets/hnrtech/dymon/Dymon-stagings.pem
+  
+Host oci
+  HostName 140.245.14.93
+  User ubuntu
+  IdentityFile ~/secrets/stl/oci/mna-id-rsa

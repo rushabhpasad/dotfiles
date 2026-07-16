@@ -11,7 +11,7 @@ export ENABLE_TOOL_SEARCH=true
 export JAVA_HOME=$(/usr/libexec/java_home)
 
 # AWS
-export AWS_PROFILE=stl-admin
+export AWS_PROFILE=stl-dev
 export AWS_DEFAULT_REGION=ap-south-1
 
 # Anthropic / Claude

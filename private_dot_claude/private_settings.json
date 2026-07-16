@@ -9,6 +9,7 @@
       "Bash(rtk *)",
       "Bash(ssh stl-dev:*)",
       "Bash(ssh stl-prod:*)",
+      "Bash(ssh stl:*)",
       "Bash(npx *)",
       "Bash(npm *)",
       "Bash(node *)",
@@ -53,80 +54,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
   "hooks": {
-    "ConfigChange": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "CwdChanged": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "Elicitation": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "ElicitationResult": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "InstructionsLoaded": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "PermissionDenied": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "PermissionRequest": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "PostCompact": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "PostToolUseFailure": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "PreCompact": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
@@ -136,16 +64,6 @@
             "command": "/Users/rpasad/.claude/hooks/rtk-rewrite.sh"
           }
         ]
-      },
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "SessionEnd": [
-      {
-        "matcher": "",
-        "hooks": []
       }
     ],
     "SessionStart": [
@@ -158,48 +76,6 @@
           }
         ]
       }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "StopFailure": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "SubagentStart": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "SubagentStop": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "TaskCompleted": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "TeammateIdle": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
     ]
   },
   "statusLine": {
@@ -208,15 +84,16 @@
     "padding": 0
   },
   "enabledPlugins": {
-    "swift-lsp@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "document-skills@anthropic-agent-skills": true,
     "caveman@caveman": false,
     "claude-mem@thedotmack": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
+    "document-skills@anthropic-agent-skills": true,
+    "frontend-design@claude-plugins-official": true,
+    "gitkraken-hooks@gitkraken": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
     "vercel@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
@@ -234,6 +111,12 @@
       },
       "autoUpdate": true
     },
+    "gitkraken": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/rpasad/.claude/plugins/marketplaces/gitkraken"
+      }
+    },
     "thedotmack": {
       "source": {
         "source": "github",
@@ -245,5 +128,6 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "tui": "fullscreen"
 }

@@ -1,8 +1,8 @@
 # This is Git's per-user configuration file.
 [user]
 	name = Rushabh Pasad
-	email = rushabh.pasad@testlify.com
-	signingKey = B3E5F0F39452FAA21E8CADBB4199574005EEA5D7
+	email = rushabh@samyaktechlabs.com
+	signingKey = 27F63F9E37333E1AF248F23467B1C5F19E1AF77D
 [includeIf "gitdir:/Users/rpasad/testlify/"]
 	path = ~/.gitconfig-testlify
 [push]
@@ -25,7 +25,7 @@
 	template = /Users/rpasad/.stCommitMsg
 	gpgSign = true
 [gpg]
-	program = gpg
+	program = /opt/homebrew/bin/gpg
 	format = openpgp
 [tag]
 	forceSignAnnotated = true
@@ -34,3 +34,9 @@
 	allowedSignersFile = 
 [credential]
 	helper = osxkeychain
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
