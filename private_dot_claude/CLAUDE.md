@@ -35,7 +35,7 @@ Spawn rules:
 - Haiku cannot spawn subagents. If it needs to, return to parent.
 - Max spawn depth: 2
 - Subagents escalate to parent, never self-escalate model tier
-- Fable 5 is not a fan-out tier ‚Äî one hard problem at a time, main-thread
+- Fable 5 is not a fan-out tier - one hard problem at a time, main-thread
 
 ## Preferred Tools
 - Public pages → WebFetch (free, text-only)

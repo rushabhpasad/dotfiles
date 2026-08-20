@@ -21,8 +21,6 @@ brew "cloud-nuke"
 brew "coreutils"
 # Fast and simple Node.js version manager
 brew "fnm"
-# Interact with Google Gemini AI models from the command-line
-brew "gemini-cli"
 # GitHub command-line tool
 brew "gh"
 # Distributed revision control system
@@ -80,7 +78,7 @@ brew "redis"
 # CLI proxy to minimize LLM token consumption
 brew "rtk"
 # Powerful, clean, object-oriented scripting language
-brew "ruby", link: false
+brew "ruby"
 # Safe, concurrent, practical language
 brew "rust"
 # Fast, configurable, shell plugin manager

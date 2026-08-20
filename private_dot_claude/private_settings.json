@@ -157,5 +157,6 @@
       "**Org-specific CLIs**: None configured",
       "routine under /Users/rpasad/stl/aif-platform/ prefix"
     ]
-  }
+  },
+  "model": "claude-fable-5[1m]"
 }
