@@ -96,7 +96,7 @@ brew "trufflehog"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
 # Command-line interface for Vercel
-brew "vercel-cli"
+brew "vercel"
 # Vue.js language server
 brew "vue-language-server"
 # Little beautifier tool for xcodebuild
@@ -185,6 +185,31 @@ cask "visual-studio-code"
 cask "vlc"
 # Video communication and virtual meeting platform
 cask "zoom"
+mas "1Password for Safari", id: 1569813296
+mas "Amphetamine", id: 937984704
+mas "Apple Configurator", id: 1037126344
+mas "Blackmagic Disk Speed Test", id: 425264550
+mas "Developer", id: 640199958
+mas "Final Cut Pro", id: 424389933
+mas "Keynote", id: 361285480
+mas "Numbers", id: 361304891
+mas "Pages", id: 361309726
+mas "PhotoScape X", id: 929507092
+mas "Prime Video", id: 545519333
+mas "QR Journal", id: 483820530
+mas "Simple Web Server", id: 1625925255
+mas "Slack", id: 803453959
+mas "Stockfish", id: 801463932
+mas "Super Agent", id: 1568262835
+mas "Swift Playground", id: 1496833156
+mas "System Designer", id: 1102494854
+mas "Telegram", id: 747648890
+mas "The Unarchiver", id: 425424353
+mas "Township", id: 781424368
+mas "Trello", id: 1278508951
+mas "Userscripts", id: 1463298887
+mas "Windows App", id: 1295203466
+mas "Xcode", id: 497799835
 vscode "anthropic.claude-code"
 vscode "continue.continue"
 vscode "esbenp.prettier-vscode"

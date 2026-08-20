@@ -28,12 +28,14 @@
 When spawning subagents, use the cheapest model that can handle the task:
 - Haiku: bulk mechanical tasks - no judgment needed
 - Sonnet: scoped research, code exploration, synthesis
-- Opus: only for real planning or tradeoff decisions
+- Opus: strategic planning and tradeoff decisions - default top tier
+- Fable: reserved ceiling; only for problems Opus can't resolve - long-horizon autonomous runs, complex architecture, and deep debugging. Prefer it on the main thread orchestrating cheaper subagents, not spawned in bulk/parallel.
 
 Spawn rules:
 - Haiku cannot spawn subagents. If it needs to, return to parent.
 - Max spawn depth: 2
 - Subagents escalate to parent, never self-escalate model tier
+- Fable 5 is not a fan-out tier ‚Äî one hard problem at a time, main-thread
 
 ## Preferred Tools
 - Public pages → WebFetch (free, text-only)

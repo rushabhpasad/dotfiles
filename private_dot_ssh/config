@@ -42,7 +42,17 @@ Host stl-prod
 Host dymon-staging
   HostName 99.79.72.60
   User ubuntu
-  IdentityFile ~/secrets/hnrtech/dymon/Dymon-stagings.pem
+  IdentityFile ~/secrets/hnrtech/dymon/dymon-staging.pem
+
+Host dymon-prod
+  HostName 174.136.193.26
+  User dymonca
+  IdentityFile ~/secrets/hnrtech/dymon/dymon-prod.pem
+  
+Host dymon-prod-ts
+  HostName 100.92.180.90
+  User dymonca
+  IdentityFile ~/secrets/hnrtech/dymon/dymon-prod.pem
   
 Host oci
   HostName 140.245.14.93
